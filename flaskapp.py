@@ -1,8 +1,9 @@
 from flask import Flask, request, jsonify
-app = Flask (__name__)
+app = Flask(__name__)
 
 #    pip install Flask
 #    $ FLASK_APP = hello.py flask run
+
 
 @app.route("/api/heart_rate/summary")
 def receive():
@@ -10,7 +11,7 @@ def receive():
     #  convert to array for processing
     t = dict['time']
     v = dict['voltage']
-    # t and v's are arrays
+    # t and v's are arrays for analysis
 
 
 @app.route("/api/heart_rate/average")
@@ -19,8 +20,8 @@ def receiveagain():
     #  convert to array for processing
     t = dict['time']
     v = dict['voltage']
-    t_avg = dict['averaging_period'] #  in seconds
-    # t and v's are arrays
+    t_avg = dict['averaging_period']  # in seconds
+    # t, v, and t_avg are arrays for analysis
 
 
 # @app.route("/st_hello", methods=['POST'])
