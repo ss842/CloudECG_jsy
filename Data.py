@@ -5,7 +5,7 @@ import numpy as np
 
 class Data:
 
-    def __init__(self, filename='ecg_testdata.csv'):
+    def __init__(self):
         self.value_range_result = None
         self.data_type_result = None
 
@@ -17,6 +17,14 @@ def receive_summary():
     t = j_dict['time']
     v = j_dict['voltage']
     # t and v's are arrays for analysis
+
+
+@app.route("/api/heart_rate/average")
+def receive_average():
+    j_dict = request.get_json()
+    t = j_dict['time']
+    v = j_dict['voltage']
+    t_avg = j_dict['averaging_period']  # in seconds
 
 
 def value_range(self):
@@ -41,22 +49,33 @@ def data_type(self):
 
 self.hr = [t, v]
 
+@app.route("/api/heart_rate/summary")
+def give_summary():
+    # output JSON time, instantaneous_heart_rate, tachycardia_annotations, brachycardia_annotations
+    time = jsonify(t)
+    instantaneous_heart_rate = jsonify(Vitals.inst_hr_array)
+    tachycardia_annotations = jsonify(Diagnosis.tachy_result)
+    brachycardia_annotations = jsonify(Diagnosis.brachy_result)
+    print(time)
+    print(instantaneous_heart_rate)
+    print(tachycardia_annotations)
+    print(brachycardia_annotations)
+
 
 @app.route("/api/heart_rate/average")
-def receive_average():
-    j_dict = request.get_json()
-    t = j_dict['time']
-    v = j_dict['voltage']
-    t_avg = j_dict['averaging_period']  # in seconds
-
-    for row in range(len(self.filename_array)):
-        if self.filename_array[row, 1] >= 300:
-            print("Your voltage values seem too high!")
-            self.value_range_result = False
-            raise ValueError
-        else:
-            self.value_range_result = True
-
+def give_average():
+    # output JSON averaging_period, time_interval, instantaneous_heart_rate, tachycardia_annotations,
+    # brachycardia_annotations
+    # averaging period = averaging_period
+    time_interval = time
+    instantaneous_heart_rate = jsonify(Vitals.inst_hr_array)
+    tachycardia_annotations = jsonify(Diagnosis.tachy_result)
+    brachycardia_annotations = jsonify(Diagnosis.brachy_result)
+    print(averaging_period)
+    print(time_interval)
+    print(instantaneous_heart_rate)
+    print(tachycardia_annotations)
+    print(brachycardia_annotations)
 
 
 
