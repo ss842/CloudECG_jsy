@@ -6,70 +6,57 @@ import numpy as np
 class Data:
 
     def __init__(self, filename='ecg_testdata.csv'):
-        self.filename_array = np.genfromtxt(filename,
-                                            delimiter=',', skip_header=1, missing_values='', filling_values=0.0)
-        self.hr_data = np.genfromtxt(filename, delimiter=',',
-                                     skip_header=1, missing_values='', filling_values=0.0)
-        self.column_check_result = None
-        self.value_type_result = None
         self.value_range_result = None
-        self.f = np.array([0, 0])
+        self.data_type_result = None
 
-    def column_check(self):
-        """ Confirms that data is arranged in 2 columns
-        :param: csv file with HR data
-        :rtype: Error raised if data structure is incorrect
-        """
 
-        if self.filename_array.shape[1] != 2:
-            print("Your file does not have 2 columns.")
-            self.column_check_result = False
-            raise TypeError
+@app.route("/api/heart_rate/summary")
+def receive_summary():
+    j_dict = request.get_json()  # in a json dict
+    #  convert to array for processing
+    t = j_dict['time']
+    v = j_dict['voltage']
+    # t and v's are arrays for analysis
+
+
+def value_range(self):
+    for x in range(len(v)):
+        if x >= 300:
+            print("Your voltage values seem too high!")
+            self.value_range_result = False
+            raise ValueError
         else:
-            self.column_check_result = True
+            self.value_range_result = True
 
-    def value_range(self):
-        """ Confirms that the signal is within an expected range (below 300mV)
-        :param: csv file with HR data
-        :rtype: Error raised if mV values exceed 300mV
-        """
 
-        # rows, columns = self.filename_array.shape
-        for row in range(len(self.filename_array)):
-            if self.filename_array[row, 1] >= 300:
-                print("Your voltage values seem too high!")
-                self.value_range_result = False
-                raise ValueError
-            else:
-                self.value_range_result = True
+def data_type(self):
+    for x in range(0, len(v)):
+        if x == str:
+            print("Your data contains strings!")
+            self.data_type_result = False
+            raise ValueError
+    else:
+        self.data_type_result = True
 
-    def extraction(self):
-        """ Opens CSV file, runs unit tests to throw any needed errors, then creates an array with any gaps in
-        data filled with averages of previous/next data
-        :param: csv file with HR data
-        :rtype: hr_data as the matrix for data analysis """
 
-        try:
-            self.column_check()
-        except Exception as ex:
-            print(ex)
-            return
+self.hr = [t, v]
 
-        # try:
-        #     self.value_type()
-        # except Exception as ex:
-        #     print(ex)
-        #     return
 
-        try:
-            self.value_range()
-        except Exception as ex:
-            print(ex)
-            return
+@app.route("/api/heart_rate/average")
+def receive_average():
+    j_dict = request.get_json()
+    t = j_dict['time']
+    v = j_dict['voltage']
+    t_avg = j_dict['averaging_period']  # in seconds
 
-        f = self.hr_data
-        for x in range(1, len(f[:, 0])):
-            if f[x, 0] == 0.0:
-                f[x, 0] = (f[x + 1, 0]+f[x - 1, 0]) / 2
+    for row in range(len(self.filename_array)):
+        if self.filename_array[row, 1] >= 300:
+            print("Your voltage values seem too high!")
+            self.value_range_result = False
+            raise ValueError
+        else:
+            self.value_range_result = True
 
-        self.hr_data = f
+
+
+
