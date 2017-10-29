@@ -49,6 +49,7 @@ def data_type(self):
 
 self.hr = [t, v]
 
+
 @app.route("/api/heart_rate/summary")
 def give_summary():
     # output JSON time, instantaneous_heart_rate, tachycardia_annotations, brachycardia_annotations
@@ -76,6 +77,3 @@ def give_average():
     print(instantaneous_heart_rate)
     print(tachycardia_annotations)
     print(brachycardia_annotations)
-
-
-
