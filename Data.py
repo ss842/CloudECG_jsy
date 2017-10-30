@@ -37,7 +37,7 @@ def value_range(self):
             self.value_range_result = True
 
 
-def data_type(self):
+def value_type(self):
     for x in range(0, len(v)):
         if x == str:
             print("Your data contains strings!")
