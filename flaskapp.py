@@ -15,7 +15,7 @@ class Cloud:
         self.cloud_count = 0
 
     @app.route("/api/heart_rate/summary")
-    def summary():
+    def summary(self):
         j_dict = request.get_json()  # in a json dict
         #  convert to array for processing
         t = j_dict['time']
@@ -38,12 +38,8 @@ class Cloud:
         summary_content = [time_dict, inst_hr_dict, tachy_dict, brachy_dict]
         return jsonify(summary_content)
 
-
-        # Data.value_range(request.get_json())
-        # Data.value_type(request.get_json())
-
     @app.route("/api/heart_rate/average")
-    def average():
+    def average(self):
         j_dict = request.get_json()  # in a json dict
         #  convert to array for processing
         t = j_dict['time']
@@ -56,7 +52,6 @@ class Cloud:
         peak_data.ecg_peakdetect(hr)
         peak_times = peak_data.t
         inst_data = V.Vitals(peak_times)
-        inst_hr_output = inst_data.inst_hr_array
         # avg_hr_output =
         tachy_output = inst_data.tachy_result
         brachy_output = inst_data.brachy_result
@@ -69,7 +64,6 @@ class Cloud:
         average_content = [avg_period_dict, time_dict, avg_hr_dict, tachy_dict, brachy_dict]
         return jsonify(average_content)
 
-
 # @app.route("/api/heart_rate/summary")
 # def give_summary():
 #     # output JSON time, instantaneous_heart_rate, tachycardia_annotations, brachycardia_annotations
@@ -81,7 +75,6 @@ class Cloud:
 #     return instantaneous_heart_rate
 #     return (tachycardia_annotations
 #     return (brachycardia_annotations
-
 
 # @app.route("/api/heart_rate/average")
 # def give_average():
@@ -98,4 +91,5 @@ class Cloud:
 #     print(tachycardia_annotations)
 #     print(brachycardia_annotations)
 
-
+# Data.value_range(request.get_json())
+# Data.value_type(request.get_json())
