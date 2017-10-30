@@ -1,4 +1,7 @@
-import Data
+import Data as D
+import Processing as P
+import Vitals as V
+import Diagnosis as Dia
 from flask import Flask, request, jsonify
 app = Flask(__name__)
 
@@ -6,28 +9,65 @@ app = Flask(__name__)
 #    $ FLASK_APP = hello.py flask run
 
 
-@app.route("/api/heart_rate/summary")
-def summary():
-    j_dict = request.get_json()  # in a json dict
-    #  convert to array for processing
-    t = j_dict['time']
-    v = j_dict['voltage']
-    data_checker = Data(t, v)
-    if data_checker.value_range_result is True & data_checker.value_type_result is True:
-        self.hr = [t, v]
+class Cloud:
+
+    def __init__(self):
+        self.cloud_count = 0
+
+    @app.route("/api/heart_rate/summary")
+    def summary():
+        j_dict = request.get_json()  # in a json dict
+        #  convert to array for processing
+        t = j_dict['time']
+        v = j_dict['voltage']
+        data_checker = D.Data(t, v)
+        if data_checker.value_range_result is True & data_checker.value_type_result is True:
+            hr = [t, v]
+        peak_data = P.Processing()
+        peak_data.ecg_peakdetect(hr)
+        peak_times = peak_data.t
+        inst_data = V.Vitals(peak_times)
+        inst_hr_output = inst_data.inst_hr_array
+        tachy_output = inst_data.tachy_result
+        brachy_output = inst_data.brachy_result
+        #  output JSON time, instantaneous_heart_rate, tachycardia_annotations, brachycardia_annotations
+        time_dict = {"time": t.tolist()}
+        inst_hr_dict = {"instantaneous_heart_rate": inst_hr_output.tolist()}
+        tachy_dict = {"tachycardia_annotations": tachy_output.tolist()}
+        brachy_dict = {"brachycardia_annotations": brachy_output.tolist()}
+        summary_content = [time_dict, inst_hr_dict, tachy_dict, brachy_dict]
+        return jsonify(summary_content)
 
 
-    # Data.value_range(request.get_json())
-    # Data.value_type(request.get_json())
+        # Data.value_range(request.get_json())
+        # Data.value_type(request.get_json())
 
-@app.route("/api/heart_rate/average")
-def average():
-    j_dict = request.get_json()
-    #  convert to array for processing
-    t = j_dict['time']
-    v = j_dict['voltage']
-    t_avg = dict['averaging_period']  # in seconds
-    # t, v, and t_avg are arrays for analysis
+    @app.route("/api/heart_rate/average")
+    def average():
+        j_dict = request.get_json()  # in a json dict
+        #  convert to array for processing
+        t = j_dict['time']
+        v = j_dict['voltage']
+        avg_period = j_dict['averaging_period']
+        data_checker = D.Data(t, v)
+        if data_checker.value_range_result is True & data_checker.value_type_result is True:
+            hr = [t, v]
+        peak_data = P.Processing()
+        peak_data.ecg_peakdetect(hr)
+        peak_times = peak_data.t
+        inst_data = V.Vitals(peak_times)
+        inst_hr_output = inst_data.inst_hr_array
+        # avg_hr_output =
+        tachy_output = inst_data.tachy_result
+        brachy_output = inst_data.brachy_result
+        #  output JSON time, instantaneous_heart_rate, tachycardia_annotations, brachycardia_annotations
+        avg_period_dict = {"averaging_period": avg_period.tolist()}
+        time_dict = {"time_interval": t.tolist()}
+        avg_hr_dict = {"average_heart_rate": avg_hr_output.tolist()}
+        tachy_dict = {"tachycardia_annotations": tachy_output.tolist()}
+        brachy_dict = {"brachycardia_annotations": brachy_output.tolist()}
+        average_content = [avg_period_dict, time_dict, avg_hr_dict, tachy_dict, brachy_dict]
+        return jsonify(average_content)
 
 
 # @app.route("/api/heart_rate/summary")
@@ -59,16 +99,3 @@ def average():
 #     print(brachycardia_annotations)
 
 
-# @app.route("/api/heart_rate/summary")
-# def give_summary():
-#     # output JSON time, instantaneous_heart_rate, tachycardia_annotations, brachycardia_annotations
-#     # time =
-#     # instantaneous_heart_rate =
-#     # tachycardia_annotations =
-#     # brachycardia_annotations =
-
-
-# @app.route("/st_hello", methods=['POST'])
-# def structured_hello():
-#     print(request.json)
-#     return "done %d" % request.json['a']
