@@ -14,9 +14,20 @@ class Cloud:
     def __init__(self):
         self.cloud_count = 0
 
+    def send_error(self, message, code):
+        err = {
+            "error": message
+        }
+        return jsonify(err), code
+
     @app.route("/api/heart_rate/summary")
     def summary(self):
         j_dict = request.get_json()  # in a json dict
+        try:
+            # type(j_dict) == str
+            j_dict.json()
+        except ValueError:
+            return send_error("Input is not JSON dictionary", 400)
         #  convert to array for processing
         t = j_dict['time']
         v = j_dict['voltage']
