@@ -1,0 +1,4 @@
+name: bme590lec15
+dependencies:
+  - python>=3.5
+  - flask
