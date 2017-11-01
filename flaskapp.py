@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 
 def send_error(message, code):
+    """ Sends Errors through Web Service"""
     err = {
         "error": message
     }
@@ -52,7 +53,7 @@ def average():
     """ Runs Web Service
     :param: time: user inputted as json dictionary
     :param: voltage: user inputted as json dictionary
-    :param: averaging_period: user inptted as json dictionary
+    :param: averaging_period: user inputted as json dictionary
     :rtype: json dictionary output of time_interval, average_heart_rate, tachycardia_annotations, brachycardia_annotations
     """
     j_dict = request.get_json()
