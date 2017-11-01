@@ -1,7 +1,7 @@
 from Data import Data
-from Processing import Processing
-from Vitals import Vitals
-from Diagnosis import Diagnosis
+from bmr590hrm.Processing import Processing
+from bmr590hrm.Vitals import Vitals
+from bmr590hrm.Diagnosis import Diagnosis
 from flask import Flask, request, jsonify
 app = Flask(__name__)
 #    pip install Flask
