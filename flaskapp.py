@@ -37,6 +37,11 @@ def get_brachy_tachy(peak_times):
 
 @app.route("/api/heart_rate/summary")
 def summary():
+    """ Runs Web Service
+    :param: time: user inputted as json dictionary
+    :param: voltage: user inputted as json dictionary
+    :rtype: json dictionary output of time, instantaneous_heart_rate, tachycardia_annotations, brachycardia_annotations
+    """
     j_dict = request.get_json()
     try:
         j_dict.json()
@@ -56,6 +61,12 @@ def summary():
 
 @app.route("/api/heart_rate/average")
 def average():
+    """ Runs Web Service
+    :param: time: user inputted as json dictionary
+    :param: voltage: user inputted as json dictionary
+    :param: averaging_period: user inptted as json dictionary
+    :rtype: json dictionary output of time_interval, average_heart_rate, tachycardia_annotations, brachycardia_annotations
+    """
     j_dict = request.get_json()  # in a json dict
     #  convert to array for processing
     t = j_dict['time']
