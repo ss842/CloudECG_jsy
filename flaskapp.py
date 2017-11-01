@@ -1,7 +1,7 @@
-import Data as D
-import Processing as P
-import Vitals as V
-import Diagnosis as Dia
+from Data import Data
+from Processing import Processing
+from Vitals import Vitals
+from Diagnosis import Diagnosis
 from flask import Flask, request, jsonify
 app = Flask(__name__)
 
@@ -31,13 +31,22 @@ class Cloud:
         #  convert to array for processing
         t = j_dict['time']
         v = j_dict['voltage']
-        data_checker = D.Data(t, v)
+        data_checker = Data(t, v)
+        # need to fill in !!
         if data_checker.value_range_result is True & data_checker.value_type_result is True:
             hr = [t, v]
-        peak_data = P.Processing()
+
+        # data = Data(t, v)
+        # try:
+        #     data.verify()
+        # except ValueError as inst:
+        #     print(inst.message)
+        #     send_error(efsdgknf + inst.message, 400)
+
+        peak_data = Processing()
         peak_data.ecg_peakdetect(hr)
         peak_times = peak_data.t
-        inst_data = V.Vitals(peak_times)
+        inst_data = Vitals(peak_times)
         inst_hr_output = inst_data.inst_hr_array
         tachy_output = inst_data.tachy_result
         brachy_output = inst_data.brachy_result
@@ -56,13 +65,13 @@ class Cloud:
         t = j_dict['time']
         v = j_dict['voltage']
         avg_period = j_dict['averaging_period']
-        data_checker = D.Data(t, v)
+        data_checker = Data(t, v)
         if data_checker.value_range_result is True & data_checker.value_type_result is True:
             hr = [t, v]
-        peak_data = P.Processing()
+        peak_data = Processing()
         peak_data.ecg_peakdetect(hr)
         peak_times = peak_data.t
-        inst_data = V.Vitals(peak_times)
+        inst_data = Vitals(peak_times)
         # avg_hr_output =
         tachy_output = inst_data.tachy_result
         brachy_output = inst_data.brachy_result
