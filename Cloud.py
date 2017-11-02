@@ -24,7 +24,7 @@ def summary():
     :param: voltage: user inputted as json dictionary
     :rtype: json dictionary output of time, instantaneous_heart_rate, tachycardia_annotations, brachycardia_annotations
     """
-    j_dict = request.get_json()
+    j_dict = request.json()
     try:
         j_dict.json()
     except ValueError:
@@ -57,7 +57,7 @@ def average():
     :param: averaging_period: user inputted as json dictionary
     :rtype: json dictionary output of time_interval, average_heart_rate, tachycardia_annotations, brachycardia_annotations
     """
-    j_dict = request.get_json()
+    j_dict = request.json()
     t = np.array(j_dict['time'])
     v = np.array(j_dict['voltage'])
     avg_period = np.array(j_dict['averaging_period'])
