@@ -47,9 +47,13 @@ def summary():
     inst_hr_dict = {"instantaneous_heart_rate": inst_hr_output.tolist()}
     tachy_dict = {"tachycardia_annotations": tachy_output.tolist()}
     brachy_dict = {"brachycardia_annotations": brachy_output.tolist()}
-    summary_content = [time_dict, inst_hr_dict, tachy_dict, brachy_dict]
-    return jsonify(summary_content)
-
+    summary_content = jsonify[time_dict, inst_hr_dict, tachy_dict, brachy_dict]
+    try:
+        json.loads(summary_content)
+    except ValueError:
+        return send_error("Code corruption, output not successfully converted to JSON", 700)
+    else:
+        return average_content
 
 @app.route("/api/heart_rate/average")
 def average():
@@ -83,8 +87,13 @@ def average():
     avg_hr_dict = {"average_heart_rate": avg_hr_output.tolist()}
     tachy_dict = {"tachycardia_annotations": tachy_output.tolist()}
     brachy_dict = {"brachycardia_annotations": brachy_output.tolist()}
-    average_content = [avg_period_dict, time_dict, avg_hr_dict, tachy_dict, brachy_dict]
-    return jsonify(average_content)
+    average_content = jsonify[avg_period_dict, time_dict, avg_hr_dict, tachy_dict, brachy_dict]
+    try:
+        json.loads(average_content)
+    except ValueError:
+        return send_error("Code corruption, output not successfully converted to JSON", 700)
+    else:
+        return average_content
 
 # data = Data(t, v)
 # try:
