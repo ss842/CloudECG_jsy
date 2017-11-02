@@ -9,7 +9,11 @@ Welcome to CloudECG_jsy's documentation!
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-
+		flaskapp.py
+		Data.py
+		Processing.py
+		Vitals.py
+		Diagnosis.py
 
 
 Indices and tables
