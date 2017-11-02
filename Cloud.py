@@ -2,7 +2,7 @@ import numpy as np
 import json
 from Data import Data
 from bme590hrm.Processing import Processing
-from bme590hrm.Vitals import Vitals
+from bme590hrm.Vitals import Vitals 
 from bme590hrm.Diagnosis import Diagnosis
 from flask import Flask, request, jsonify
 app = Flask(__name__)
