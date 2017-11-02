@@ -5,6 +5,7 @@ from bme590hrm.Diagnosis import Diagnosis
 from flask import Flask, request, jsonify
 app = Flask(__name__)
 import numpy as np
+import json
 #    pip install Flask
 #    $ FLASK_APP = hello.py flask run
 
@@ -26,9 +27,10 @@ def summary():
     """
     j_dict = request.json()
     try:
-        j_dict.json()
+        json.loads(j_dict)
+        # load is for file, loads is for string
     except ValueError:
-        return send_error("Input is not JSON dictionary", 400)
+        return send_error("Input is not JSON dictionary", 600)
     t = np.array(j_dict['time'])
     v = np.array(j_dict['voltage'])
     data_checker = Data(t, v)
@@ -58,6 +60,11 @@ def average():
     :rtype: json dictionary output of time_interval, average_heart_rate, tachycardia_annotations, brachycardia_annotations
     """
     j_dict = request.json()
+    try:
+        json.loads(j_dict)
+        # load is for file, loads is for string
+    except ValueError:
+        return send_error("Input is not JSON dictionary", 600)
     t = np.array(j_dict['time'])
     v = np.array(j_dict['voltage'])
     avg_period = np.array(j_dict['averaging_period'])
