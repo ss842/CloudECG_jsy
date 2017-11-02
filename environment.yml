@@ -1,4 +1,4 @@
-name: bme590lec15
+name: CloudECG_jsy
 dependencies:
   - python>=3.5
   - flask

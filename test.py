@@ -2,16 +2,17 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 
 
-@app.route("/api/heart_rate/summary", methods=['POST'])
-def hello():
-    time = {"time": [0, 1, 2, 3, 4]}
-    voltage = {"voltage": [30, 40, 50, 60]}
-    arr = [time, voltage]
-    return jsonify(arr)
+# @app.route("/api/heart_rate/summary")
+# def hello():
+#     time = {"time": [0, 1, 2, 3, 4]}
+#     voltage = {"voltage": [30, 40, 50, 60]}
+#     arr = [time, voltage]
+#     return jsonify(arr)
 
-@app.route("/api/heart_rate/summary")
+@app.route("/api/heart_rate/summary/", methods=['POST'])
 def trial_get():
-    t = request.args.get('time')
+    data = request.get_json(force=True, silent=False, cache=True)
+    t = data['time']
     #t = j_dict['time']
     #v = j_dict['voltage']
 
