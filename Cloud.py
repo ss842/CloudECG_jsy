@@ -31,16 +31,25 @@ def summary():
         return send_error("Input is not JSON dictionary", 400)
     t = np.array(j_dict['time'])
     v = np.array(j_dict['voltage'])
-    data_checker = Data(t, v)
-    if data_checker.value_range_result() is True & data_checker.value_type_result() is True:
+    data = Data(t, v)
+    if data.value_range_result() is True & data.value_type_result() is True:
         hr = np.column_stack((t, v))
+
     peak_data = Processing()
     peak_data.ecg_peakdetect(hr)
     peak_times = peak_data.t
-    inst_data = Vitals(peak_times)
-    inst_hr_output = inst_data.inst_hr_array
-    brachy_output = inst_data.brachy_result
-    tachy_output = inst_data.tachy_result
+
+    hr_data = Vitals(peak_times, hr[:, 0])
+    inst_hr_array = hr_data.inst_hr_array
+    try:
+        inst_hr_diagnosis = Diagnosis(inst_hr_array)
+    except ValueError as inst:
+        print(inst.message)
+        send_error(inst.message, 400)
+
+    brachy_output = inst_hr_diagnosis.brachy_result
+    tachy_output = inst_hr_diagnosis.tachy_result
+
     time_dict = {"time": t.tolist()}
     inst_hr_dict = {"instantaneous_heart_rate": inst_hr_output.tolist()}
     tachy_dict = {"tachycardia_annotations": tachy_output.tolist()}
@@ -61,16 +70,24 @@ def average():
     t = np.array(j_dict['time'])
     v = np.array(j_dict['voltage'])
     avg_period = np.array(j_dict['averaging_period'])
-    data_checker = Data(t, v)
-    if data_checker.value_range_result() is True & data_checker.value_type_result() is True:
+    data = Data(t, v)
+    if data.value_range_result() is True & data.value_type_result() is True:
         hr = np.column_stack((t, v))
+
     peak_data = Processing()
     peak_data.ecg_peakdetect(hr)
     peak_times = peak_data.t
-    inst_data = Vitals(peak_times)
-    avg_hr_output = inst_data.avg_hr_array
-    tachy_output = inst_data.tachy_result
-    brachy_output = inst_data.brachy_result
+
+    hr_data = Vitals(peak_times, hr[:, 0])
+    avg_hr_array = hr_data.avg_hr_array
+    try:
+        avg_hr_diagnosis = Diagnosis(avg_hr_array)
+    except ValueError as inst:
+        print(inst.message)
+        send_error(inst.message, 400)
+    brachy_output = avg_hr_diagnosis.brachy_result
+    tachy_output = avg_hr_diagnosis.tachy_result
+
     avg_period_dict = {"averaging_period": avg_period.tolist()}
     time_dict = {"time_interval": t.tolist()}
     avg_hr_dict = {"average_heart_rate": avg_hr_output.tolist()}
