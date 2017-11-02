@@ -1,9 +1,10 @@
 from Data import Data
-from bmr590hrm.Processing import Processing
-from bmr590hrm.Vitals import Vitals
-from bmr590hrm.Diagnosis import Diagnosis
+from bme590hrm.Processing import Processing
+from bme590hrm.Vitals import Vitals
+from bme590hrm.Diagnosis import Diagnosis
 from flask import Flask, request, jsonify
 app = Flask(__name__)
+import numpy as np
 #    pip install Flask
 #    $ FLASK_APP = hello.py flask run
 
@@ -28,11 +29,11 @@ def summary():
         j_dict.json()
     except ValueError:
         return send_error("Input is not JSON dictionary", 400)
-    t = j_dict['time']
-    v = j_dict['voltage']
+    t = np.array(j_dict['time'])
+    v = np.array(j_dict['voltage'])
     data_checker = Data(t, v)
-    if data_checker.value_range_result is True & data_checker.value_type_result is True:
-        hr = [t, v]
+    if data_checker.value_range_result() is True & data_checker.value_type_result() is True:
+        hr = np.column_stack((t, v))
     peak_data = Processing()
     peak_data.ecg_peakdetect(hr)
     peak_times = peak_data.t
@@ -57,12 +58,12 @@ def average():
     :rtype: json dictionary output of time_interval, average_heart_rate, tachycardia_annotations, brachycardia_annotations
     """
     j_dict = request.get_json()
-    t = j_dict['time']
-    v = j_dict['voltage']
-    avg_period = j_dict['averaging_period']
+    t = np.array(j_dict['time'])
+    v = np.array(j_dict['voltage'])
+    avg_period = np.array(j_dict['averaging_period'])
     data_checker = Data(t, v)
-    if data_checker.value_range_result is True & data_checker.value_type_result is True:
-        hr = [t, v]
+    if data_checker.value_range_result() is True & data_checker.value_type_result() is True:
+        hr = np.column_stack((t, v))
     peak_data = Processing()
     peak_data.ecg_peakdetect(hr)
     peak_times = peak_data.t
