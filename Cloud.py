@@ -113,13 +113,17 @@ def average():
 @app.route("/api/requests")
 def requests():
     """
+    return the total number of requests the service has served since its
+    most recent reboot.
 
     :return: counter
     """
     global counter
     counter = counter + 1
+    count_json = {"Requests to Date": counter}
 
-    return counter
+    return count_json
+
 
 
 # data = Data(t, v)
