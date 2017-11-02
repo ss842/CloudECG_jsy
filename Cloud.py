@@ -8,9 +8,16 @@ import numpy as np
 #    pip install Flask
 #    $ FLASK_APP = hello.py flask run
 
+counter = 0
 
 def send_error(message, code):
-    """ Sends Errors through Web Service"""
+    """
+    Sends errors through our web service
+    :param message: error message to be sent
+    :param code: HTTP status code
+    :rtype: jsonified error code and status code
+    """
+
     err = {
         "error": message
     }
@@ -19,11 +26,13 @@ def send_error(message, code):
 
 @app.route("/api/heart_rate/summary")
 def summary():
-    """ Runs Web Service
+    """
+    Runs web service
     :param: time: user inputted as json dictionary
     :param: voltage: user inputted as json dictionary
     :rtype: json dictionary output of time, instantaneous_heart_rate, tachycardia_annotations, brachycardia_annotations
     """
+    global counter
     j_dict = request.json()
     try:
         j_dict.json()
@@ -55,17 +64,20 @@ def summary():
     tachy_dict = {"tachycardia_annotations": tachy_output.tolist()}
     brachy_dict = {"brachycardia_annotations": brachy_output.tolist()}
     summary_content = [time_dict, inst_hr_dict, tachy_dict, brachy_dict]
+    counter = counter + 1
     return jsonify(summary_content)
 
 
 @app.route("/api/heart_rate/average")
 def average():
-    """ Runs Web Service
+    """
+    Runs Web Service
     :param: time: user inputted as json dictionary
     :param: voltage: user inputted as json dictionary
     :param: averaging_period: user inputted as json dictionary
     :rtype: json dictionary output of time_interval, average_heart_rate, tachycardia_annotations, brachycardia_annotations
     """
+    global counter
     j_dict = request.json()
     t = np.array(j_dict['time'])
     v = np.array(j_dict['voltage'])
@@ -94,7 +106,21 @@ def average():
     tachy_dict = {"tachycardia_annotations": tachy_output.tolist()}
     brachy_dict = {"brachycardia_annotations": brachy_output.tolist()}
     average_content = [avg_period_dict, time_dict, avg_hr_dict, tachy_dict, brachy_dict]
+    counter = counter + 1
     return jsonify(average_content)
+
+
+@app.route("/api/requests")
+def requests():
+    """
+
+    :return: counter
+    """
+    global counter
+    counter = counter + 1
+
+    return counter
+
 
 # data = Data(t, v)
 # try:
