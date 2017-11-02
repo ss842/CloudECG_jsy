@@ -1,4 +1,0 @@
-[submodule "bme590hrm"]
-	path = bme590hrm
-	url = git@github.com:yashasaxena/bme590hrm.git
-	branch = ClassComposition
