@@ -1,11 +1,11 @@
+import numpy as np
+import json
 from Data import Data
 from bme590hrm.Processing import Processing
 from bme590hrm.Vitals import Vitals
 from bme590hrm.Diagnosis import Diagnosis
 from flask import Flask, request, jsonify
 app = Flask(__name__)
-import numpy as np
-import json
 #    pip install Flask
 #    $ FLASK_APP = hello.py flask run
 
@@ -55,13 +55,15 @@ def summary():
     else:
         return average_content
 
+
 @app.route("/api/heart_rate/average")
 def average():
     """ Runs Web Service
     :param: time: user inputted as json dictionary
     :param: voltage: user inputted as json dictionary
     :param: averaging_period: user inputted as json dictionary
-    :rtype: json dictionary output of time_interval, average_heart_rate, tachycardia_annotations, brachycardia_annotations
+    :rtype: json dictionary output of time_interval, average_heart_rate, tachycardia_annotations,
+    brachycardia_annotations
     """
     j_dict = request.json()
     try:
