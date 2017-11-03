@@ -40,27 +40,30 @@ def summary():
 
     if data_checker.value_range_result is True & data_checker.data_type_result is True:
         hr = np.column_stack((t, v))
-    peak_data = Processing()
-    peak_data.ecg_peakdetect(hr)
-    peak_times = peak_data.t
-    peak_dict = {"peak": peak_times.tolist()}
+    #
+    # peak_data = Processing()
+    # peak_data.ecg_peakdetect(hr)
+    # peak_times = peak_data.t
+    # peak_dict = {"peak": peak_times.tolist()}
     # inst_data = Vitals(peak_times)
     # inst_hr_output = inst_data.inst_hr_array
     # brachy_output = inst_data.brachy_result
     # tachy_output = inst_data.tachy_result
-    time_dict = {"time": t.tolist()}
-    summary_test = [time_dict, peak_dict]
+    time_dict = {"time": hr[:,0].tolist()}
+    summary_test = [time_dict]
     # inst_hr_dict = {"instantaneous_heart_rate": inst_hr_output.tolist()}
     # tachy_dict = {"tachycardia_annotations": tachy_output.tolist()}
     # brachy_dict = {"brachycardia_annotations": brachy_output.tolist()}
     # summary_content = jsonify[time_dict, inst_hr_dict, tachy_dict, brachy_dict]
     s = jsonify(summary_test)
-    try:
-        json.loads(s)
-    except ValueError:
-        return send_error("Code corruption, output not successfully converted to JSON", 700)
-    else:
-        return s
+    return s
+    #
+    # try:
+    #     json.loads(s)
+    # except ValueError:
+    #     return send_error("Code corruption, output not successfully converted to JSON", 700)
+    # else:
+    #     return s
 
 
 # @app.route("/api/heart_rate/average")
