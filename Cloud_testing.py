@@ -79,13 +79,13 @@ def summary():
     # s = jsonify(hr)
     global counter
     counter = counter + 1
-
-    try:
-        json.dumps(summary_content)
-    except ValueError:
-        return send_error("Code corruption, output not successfully converted to JSON", 700)
-    else:
-        return summary_content
+    #
+    # try:
+    #     json.dumps(summary_content)
+    # except ValueError:
+    #     return send_error("Code corruption, output not successfully converted to JSON", 700)
+    # else:
+    return summary_content
     # json_hr = jsonify(summary_test)
     # return jsonify(peak_dict)
 
