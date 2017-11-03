@@ -41,8 +41,12 @@ def summary():
         return send_error("Input is not JSON dictionary", 600)
     t = np.array(j_dict['time'])
     v = np.array(j_dict['voltage'])
-    data_checker = Data(t, v)
-    if data_checker.value_range_result() is True & data_checker.value_type_result() is True:
+    try:
+        data_checker = Data(t, v)
+    except ValueError:
+        pass
+
+    if data_checker.value_range_result is True & data_checker.data_type_result is True:
         hr = np.column_stack((t, v))
     peak_data = Processing()
     peak_data.ecg_peakdetect(hr)
@@ -50,10 +54,10 @@ def summary():
     hr_data = Vitals(peak_times, hr[:, 0])
     inst_hr_array = hr_data.inst_hr_array
     try:
-         inst_hr_diagnosis = Diagnosis(inst_hr_array)
-     except ValueError as inst:
-         print(inst.message)
-         send_error(inst.message, 400)
+        inst_hr_diagnosis = Diagnosis(inst_hr_array)
+    except ValueError as inst:
+        print(inst.message)
+        send_error(inst.message, 400)
 
     brachy_output = inst_hr_diagnosis.brachy_result
     tachy_output = inst_hr_diagnosis.tachy_result
@@ -68,7 +72,7 @@ def summary():
     except ValueError:
         return send_error("Code corruption, output not successfully converted to JSON", 700)
     else:
-        return average_content
+        return summary_content
 
 
 @app.route("/api/heart_rate/average")
@@ -92,7 +96,7 @@ def average():
     v = np.array(j_dict['voltage'])
     avg_period = np.array(j_dict['averaging_period'])
     data_checker = Data(t, v)
-    if data_checker.value_range_result() is True & data_checker.value_type_result() is True:
+    if data_checker.value_range_result is True & data_checker.data_type_result is True:
         hr = np.column_stack((t, v))
     peak_data = Processing()
     peak_data.ecg_peakdetect(hr)

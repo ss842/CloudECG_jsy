@@ -1,5 +1,5 @@
 import Data as Import
-import flaskapp
+import Cloud
 import pytest
 from flask import Flask, request, jsonify
 app = Flask(__name__)
@@ -27,8 +27,7 @@ def test_data_is_good():
 
 def test_json():
     with pytest.raises(ValueError):
-        x = flaskapp.Cloud()
-        x.summary()
+        Cloud.summary()
 
     #assert type(json_data) == str
     # test = request.get_json['json_data']
