@@ -2,8 +2,8 @@ from flask import Flask, request, jsonify
 import numpy as np
 
 app = Flask(__name__)
-
-@app.route("/data/<string:filename>")
+filename = 'test_data/test_data1.csv'
+@app.route("/data")
 def csv_to_json(filename):
     filename_array = np.genfromtxt(filename,delimiter=','
                                    , missing_values='', filling_values=0.0)
