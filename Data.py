@@ -17,7 +17,7 @@ class Data:
 
     def value_range(self):
         for x in range(len(self.v)):
-            if x >= 300:
+            if self.v[x] >= 300:
                 print("Your voltage values seem too high!")
                 self.value_range_result = False
                 raise ValueError
@@ -26,7 +26,7 @@ class Data:
 
     def value_type(self):
         for x in range(len(self.v)):
-            if x == str:
+            if not float(self.v[x]):
                 print("Your data contains strings!")
                 self.data_type_result = False
                 raise ValueError
