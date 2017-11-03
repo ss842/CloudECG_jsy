@@ -67,7 +67,8 @@ def summary():
     #     return send_error("Code corruption, output not successfully converted to JSON", 700)
     # else:
     #     return s
-@app.route("/api/requests", methods=['GET']):
+
+@app.route("/api/requests", methods=['GET'])
 def requests():
     """
     return the total number of requests the service has served since its
