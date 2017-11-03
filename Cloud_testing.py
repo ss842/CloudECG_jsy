@@ -119,7 +119,7 @@ def average():
         print(Inst.args)
         send_error(Inst.args, 400)
 
-    avg_period_dict = {"averaging_period": avg_period}
+    avg_period_dict = {"averaging_period": avg_period.tolist()}
     time_dict = {"time_interval": t.tolist()}
     avg_hr_dict = {"average_heart_rate": avg_hr_array}
     tachy_dict = {"tachycardia_annotations": tachy_output}
