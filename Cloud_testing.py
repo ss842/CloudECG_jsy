@@ -29,7 +29,8 @@ def summary():
     hr = np.array([])
     j_dict = request.json
     try:
-        json.dumps(j_dict)
+        j_dict = json.dumps(j_dict)
+        j_dict = json.loads(j_dict)
         # load is for file, loads is for string
     except ValueError:
         return send_error("Input is not JSON dictionary", 600)
@@ -45,8 +46,8 @@ def summary():
     # if data_checker.value_range_result is True & data_checker.data_type_result is True:
     #     hr = np.column_stack((t, v))
     #
-    #peak_data = Processing()
-    #peak_data.ecg_peakdetect(hr)
+    peak_data = Processing()
+    peak_data.ecg_peakdetect(hr)
     #peak_times = peak_data.t
     #peak_dict = {"peak": peak_times.tolist()}
     # inst_data = Vitals(peak_times)
@@ -60,7 +61,7 @@ def summary():
     # tachy_dict = {"tachycardia_annotations": tachy_output.tolist()}
     # brachy_dict = {"brachycardia_annotations": brachy_output.tolist()}
     # summary_content = jsonify[time_dict, inst_hr_dict, tachy_dict, brachy_dict]
-    s = jsonify(summary_test)
+    s = jsonify(hr)
     global counter
     counter = counter + 1
     json_hr = jsonify(summary_test)
