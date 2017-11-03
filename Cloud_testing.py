@@ -81,7 +81,7 @@ def summary():
     counter = counter + 1
 
     try:
-        json.loads(summary_content)
+        json.dumps(summary_content)
     except ValueError:
         return send_error("Code corruption, output not successfully converted to JSON", 700)
     else:
