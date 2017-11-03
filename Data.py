@@ -26,9 +26,13 @@ class Data:
 
     def value_type(self):
         for x in range(len(self.v)):
-            if not float(self.v[x]):
+            try:
+                float(self.v[x])
+                self.data_type_result = True
+            except(TypeError,ValueError):
+            else:
                 print("Your data contains strings!")
                 self.data_type_result = False
                 raise ValueError
-        else:
-            self.data_type_result = True
+        # else:
+        #     self.data_type_result = True
