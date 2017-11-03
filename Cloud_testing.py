@@ -8,7 +8,7 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 #    pip install Flask
 #    $ FLASK_APP = hello.py flask run
-
+counter = 0
 
 def send_error(message, code):
     """ Sends Errors through Web Service"""
@@ -25,6 +25,7 @@ def summary():
     :param: voltage: user inputted as json dictionary
     :rtype: json dictionary output of time, instantaneous_heart_rate, tachycardia_annotations, brachycardia_annotations
     """
+
     j_dict = request.json
     try:
         json.dumps(j_dict)
@@ -56,6 +57,8 @@ def summary():
     # brachy_dict = {"brachycardia_annotations": brachy_output.tolist()}
     # summary_content = jsonify[time_dict, inst_hr_dict, tachy_dict, brachy_dict]
     s = jsonify(summary_test)
+    global counter
+    counter = counter +1
     return s
     #
     # try:
@@ -64,6 +67,18 @@ def summary():
     #     return send_error("Code corruption, output not successfully converted to JSON", 700)
     # else:
     #     return s
+@app.route("/api/requests", methods=['GET']):
+def requests():
+    """
+    return the total number of requests the service has served since its
+    most recent reboot.
+    :return: counter
+    """
+    global counter
+    counter = counter + 1
+    count_json = {"Requests to Date": counter}
+
+    return count_json
 
 
 # @app.route("/api/heart_rate/average")
