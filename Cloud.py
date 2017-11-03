@@ -9,6 +9,8 @@ app = Flask(__name__)
 #    pip install Flask
 #    $ FLASK_APP = hello.py flask run
 
+SEC_TO_MIN = 60
+
 counter = 0
 
 def send_error(message, code):
@@ -96,6 +98,7 @@ def average():
     t = np.array(j_dict['time'])
     v = np.array(j_dict['voltage'])
     avg_period = np.array(j_dict['averaging_period'])
+    avg_period = avg_period / SEC_TO_MIN
     data_checker = Data(t, v)
     if data_checker.value_range_result is True & data_checker.data_type_result is True:
         hr = np.column_stack((t, v))

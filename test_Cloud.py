@@ -1,40 +1,38 @@
 # import Data as Import
 # import Cloud
-# import pytest
-# from flask import Flask, request, jsonify
-# app = Flask(__name__)
+import pytest
+import json
+import flask
+import numpy as np
+
+#app = Flask(__name__)
+
+def test_json_input():
+
+    r = {"array": [1,2,3]}
+    json_r = json.dumps({"array": [1,2,3]})
+
+    python_json_r = json.loads(json_r)
+
+    assert python_json_r == r
 
 
-# def test_value_type():
-#     with pytest.raises(TypeError):
-#         x = Alternative_Data.Data('FaultyData_UnitTest.csv')
-#         x.value_type()
-#
-#
-# def test_value_range():
-#     with pytest.raises(ValueError):
-#         x = Import.Data('FaultyData_UnitTest.csv')
-#         x.value_range()
-#
-#
-# def test_data_is_good():
-#     good_test_data = Import.Data('GoodData_UnitTest.csv')
-#     good_test_data.value_type()
-#     good_test_data.value_range()
-#     assert good_test_data.value_type_result is True
-#     assert good_test_data.value_range_result is True
+def test_sec_conversion():
+    SEC_TO_MIN = 60
+    avg_period_in_minutes = .25
 
-#
-# def test_json():
-#     with pytest.raises(ValueError):
-#         Cloud.summary()
-
-    #assert type(json_data) == str
-    # test = request.get_json['json_data']
-    # time_dict = {"time": t.tolist()}
-    # return jsonify(time_dict)
+    r = {"array": 15}
 
 
-# @app.route("/api/test_json_input")
-# def test_json_input():
-#     json_true =
+    #
+    # json_r = json.dumps({"array": 15})
+    #
+    # python_json_r = json.loads(json_r)
+
+    python_json_r = json.JSONDecoder().decode(r)
+
+    v_array = np.array(python_json_r['array'])
+
+    v_array = v_array / SEC_TO_MIN
+
+    assert v_array == avg_period_in_minutes
