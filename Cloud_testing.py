@@ -124,8 +124,8 @@ def average():
     avg_hr_dict = {"average_heart_rate": avg_hr_array}
     tachy_dict = {"tachycardia_annotations": tachy_output}
     brachy_dict = {"brachycardia_annotations": brachy_output}
-    average_content = jsonify[avg_period_dict, time_dict,
-                              avg_hr_dict, tachy_dict, brachy_dict]
+    average_content = jsonify([avg_period_dict, time_dict,
+                              avg_hr_dict, tachy_dict, brachy_dict])
 
     return average_content
 
