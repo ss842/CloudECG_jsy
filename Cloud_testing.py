@@ -37,11 +37,13 @@ def summary():
     v = np.array(j_dict['voltage'])
     try:
         data_checker = Data(t, v)
+        if data_checker.value_range_result is True & data_checker.data_type_result is True:
+            hr = np.column_stack((t, v))
     except ValueError:
         pass
 
-    if data_checker.value_range_result is True & data_checker.data_type_result is True:
-        hr = np.column_stack((t, v))
+    # if data_checker.value_range_result is True & data_checker.data_type_result is True:
+    #     hr = np.column_stack((t, v))
     #
     # peak_data = Processing()
     # peak_data.ecg_peakdetect(hr)
