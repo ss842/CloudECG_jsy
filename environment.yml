@@ -2,6 +2,4 @@ name: CloudECG_jsy
 dependencies:
   - python>=3.5
   - flask
-  - json
   - numpy 
-  - fractions 
