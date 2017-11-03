@@ -10,6 +10,7 @@ app = Flask(__name__)
 #    $ FLASK_APP = hello.py flask run
 counter = 0
 
+
 def send_error(message, code):
     """ Sends Errors through Web Service"""
     err = {
@@ -50,7 +51,7 @@ def summary():
     # inst_hr_output = inst_data.inst_hr_array
     # brachy_output = inst_data.brachy_result
     # tachy_output = inst_data.tachy_result
-    time_dict = {"time": hr[:,0].tolist()}
+    time_dict = {"time": hr[:, 0].tolist()}
     summary_test = [time_dict]
     # inst_hr_dict = {"instantaneous_heart_rate": inst_hr_output.tolist()}
     # tachy_dict = {"tachycardia_annotations": tachy_output.tolist()}
@@ -58,8 +59,10 @@ def summary():
     # summary_content = jsonify[time_dict, inst_hr_dict, tachy_dict, brachy_dict]
     s = jsonify(summary_test)
     global counter
-    counter = counter +1
+    counter = counter + 1
+
     return s
+
     #
     # try:
     #     json.loads(s)
@@ -67,6 +70,7 @@ def summary():
     #     return send_error("Code corruption, output not successfully converted to JSON", 700)
     # else:
     #     return s
+
 
 @app.route("/api/requests", methods=['GET'])
 def requests():
