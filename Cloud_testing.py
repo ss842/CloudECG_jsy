@@ -48,8 +48,8 @@ def summary():
     #
     peak_data = Processing()
     peak_data.ecg_peakdetect(hr)
-    #peak_times = peak_data.t
-    #peak_dict = {"peak": peak_times.tolist()}
+    peak_times = peak_data.t
+    peak_dict = {"peak": peak_times.tolist()}
     # inst_data = Vitals(peak_times)
     # inst_hr_output = inst_data.inst_hr_array
     # brachy_output = inst_data.brachy_result
@@ -66,7 +66,7 @@ def summary():
     global counter
     counter = counter + 1
     json_hr = jsonify(summary_test)
-    return s
+    return jsonify(peak_dict)
 
     #
     # try:
