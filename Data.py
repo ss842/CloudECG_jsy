@@ -29,10 +29,12 @@ class Data:
             try:
                 float(self.v[x])
                 self.data_type_result = True
-            except(TypeError,ValueError):
-            else:
+            except(TypeError, ValueError):
                 print("Your data contains strings!")
                 self.data_type_result = False
                 raise ValueError
+
+
+
         # else:
         #     self.data_type_result = True
