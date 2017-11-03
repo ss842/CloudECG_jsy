@@ -25,7 +25,7 @@ def summary():
     :param: voltage: user inputted as json dictionary
     :rtype: json dictionary output of time, instantaneous_heart_rate, tachycardia_annotations, brachycardia_annotations
     """
-    j_dict = request.json()
+    j_dict = request.json
     try:
         json.dumps(j_dict)
         # load is for file, loads is for string
