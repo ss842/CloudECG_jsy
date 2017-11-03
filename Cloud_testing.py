@@ -50,23 +50,44 @@ def summary():
     peak_data.ecg_peakdetect(hr)
     peak_times = peak_data.t
     peak_dict = {"peak": peak_times}
-    # inst_data = Vitals(peak_times)
-    # inst_hr_output = inst_data.inst_hr_array
-    # brachy_output = inst_data.brachy_result
-    # tachy_output = inst_data.tachy_result
+    hr_data = Vitals(peak_times, hr[:, 0])
+    inst_hr_array = hr_data.inst_hr_array
+    try:
+        inst_hr_diagnosis = Diagnosis(inst_hr_array)
+    except ValueError as inst:
+        print(inst.message)
+        send_error(inst.message, 400)
+    brachy_output = inst_hr_diagnosis.brachy_result
+    tachy_output = inst_hr_diagnosis.tachy_result
+
     time_dict = {"time": t.tolist()}
     volt_dict = {"voltage": v.tolist()}
+    inst_hr_dict = {"instantaneous_heart_rate": inst_hr_array.tolist()}
+    tachy_dict = {"tachycardia_annotations": tachy_output.tolist()}
+    brachy_dict = {"brachycardia_annotations": brachy_output.tolist()}
+    summary_content = jsonify[time_dict, volt_dict, inst_hr_dict, tachy_dict, brachy_dict]
+
     summary_test = [time_dict, volt_dict]
-    # inst_hr_dict = {"instantaneous_heart_rate": inst_hr_output.tolist()}
-    # tachy_dict = {"tachycardia_annotations": tachy_output.tolist()}
-    # brachy_dict = {"brachycardia_annotations": brachy_output.tolist()}
-    # summary_content = jsonify[time_dict, inst_hr_dict, tachy_dict, brachy_dict]
-    hr = hr.tolist()
-    s = jsonify(hr)
+
+
+    #
+    # # inst_hr_dict = {"instantaneous_heart_rate": inst_hr_output.tolist()}
+    # # tachy_dict = {"tachycardia_annotations": tachy_output.tolist()}
+    # # brachy_dict = {"brachycardia_annotations": brachy_output.tolist()}
+    # # summary_content = jsonify[time_dict, inst_hr_dict, tachy_dict, brachy_dict]
+    # hr = hr.tolist()
+    # s = jsonify(hr)
     global counter
     counter = counter + 1
-    json_hr = jsonify(summary_test)
-    return jsonify(peak_dict)
+
+    try:
+        json.loads(summary_content)
+    except ValueError:
+        return send_error("Code corruption, output not successfully converted to JSON", 700)
+    else:
+        return summary_content
+    # json_hr = jsonify(summary_test)
+    # return jsonify(peak_dict)
 
     #
     # try:
