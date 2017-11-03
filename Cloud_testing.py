@@ -126,13 +126,8 @@ def average():
     brachy_dict = {"brachycardia_annotations": brachy_output}
     average_content = jsonify[avg_period_dict, time_dict,
                               avg_hr_dict, tachy_dict, brachy_dict]
-    try:
-        json.dumps(average_content)
-    except ValueError:
-        return send_error(
-            "Code corruption, output not successfully converted to JSON", 700)
-    else:
-        return average_content
+
+    return average_content
 
 
 @app.route("/api/requests", methods=['GET'])
