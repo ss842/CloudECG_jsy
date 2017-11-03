@@ -27,14 +27,14 @@ def summary():
     """
     j_dict = request.json()
     try:
-        json.loads(j_dict)
+        json.dumps(j_dict)
         # load is for file, loads is for string
     except ValueError:
         return send_error("Input is not JSON dictionary", 600)
     t = np.array(j_dict['time'])
     v = np.array(j_dict['voltage'])
     data_checker = Data(t, v)
-    if data_checker.value_range_result() is True & data_checker.value_type_result() is True:
+    if data_checker.value_range_result() is True & data_checker.data_type_result() is True:
         hr = np.column_stack((t, v))
     peak_data = Processing()
     peak_data.ecg_peakdetect(hr)
