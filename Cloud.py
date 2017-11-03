@@ -24,7 +24,8 @@ def send_error(message, code):
     }
     return jsonify(err), code
 
-@app.route("/api/heart_rate/summary")
+
+@app.route("/api/heart_rate/summary", methods=['POST'])
 def summary():
     """ Runs Web Service
     :param: time: user inputted as json dictionary
@@ -75,7 +76,7 @@ def summary():
         return summary_content
 
 
-@app.route("/api/heart_rate/average")
+@app.route("/api/heart_rate/average", methods=['POST'])
 def average():
     """ Runs Web Service
     :param: time: user inputted as json dictionary
@@ -125,8 +126,7 @@ def average():
         return average_content
 
 
-
-@app.route("/api/requests")
+@app.route("/api/requests", methods=['GET'])
 def requests():
     """
     return the total number of requests the service has served since its
