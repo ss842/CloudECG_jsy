@@ -1,10 +1,3 @@
-#  CloudECG_jsy
-import numpy as np
-
-#    pip install Flask
-#    $ FLASK_APP = hello.py flask run
-
-
 class Data:
 
     def __init__(self, time, voltage):
@@ -33,8 +26,3 @@ class Data:
                 print("Your data contains strings!")
                 self.data_type_result = False
                 raise ValueError
-
-
-
-        # else:
-        #     self.data_type_result = True
