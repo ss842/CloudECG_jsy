@@ -82,7 +82,7 @@ def requests():
     global counter
     counter = counter + 1
     count_json = {"Requests to Date": counter}
-
+    count_json = jsonify(count_json)
     return count_json
 
 
