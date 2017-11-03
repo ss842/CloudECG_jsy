@@ -73,7 +73,7 @@ def summary():
     return summary_content
 
 
-@app.route("/api/heart_rate/average")
+@app.route("/api/heart_rate/average", methods=['POST'])
 def average():
     """ Runs Web Service
     :param: time: user inputted as json dictionary
