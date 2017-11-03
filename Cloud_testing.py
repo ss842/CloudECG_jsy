@@ -61,6 +61,7 @@ def summary():
     # tachy_dict = {"tachycardia_annotations": tachy_output.tolist()}
     # brachy_dict = {"brachycardia_annotations": brachy_output.tolist()}
     # summary_content = jsonify[time_dict, inst_hr_dict, tachy_dict, brachy_dict]
+    hr = hr.tolist()
     s = jsonify(hr)
     global counter
     counter = counter + 1
