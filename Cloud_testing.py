@@ -65,7 +65,7 @@ def summary():
     inst_hr_dict = {"instantaneous_heart_rate": inst_hr_array}
     tachy_dict = {"tachycardia_annotations": tachy_output}
     brachy_dict = {"brachycardia_annotations": brachy_output}
-    summary_content = jsonify[time_dict, volt_dict, inst_hr_dict, tachy_dict, brachy_dict]
+    summary_content = jsonify([time_dict, volt_dict, inst_hr_dict, tachy_dict, brachy_dict])
 
     summary_test = [time_dict, volt_dict]
 
