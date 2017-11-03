@@ -12,6 +12,9 @@ class Data:
         self.data_type_result = None
         self.t = time
         self.v = voltage
+        self.value_range()
+        self.value_type()
+
 
 
 def value_range(self):

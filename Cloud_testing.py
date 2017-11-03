@@ -33,8 +33,12 @@ def summary():
         return send_error("Input is not JSON dictionary", 600)
     t = np.array(j_dict['time'])
     v = np.array(j_dict['voltage'])
-    data_checker = Data(t, v)
-    if data_checker.value_range_result() is True & data_checker.data_type_result() is True:
+    try:
+        data_checker = Data(t, v)
+    except ValueError:
+        pass
+
+    if data_checker.value_range_result is True & data_checker.data_type_result is True:
         hr = np.column_stack((t, v))
     peak_data = Processing()
     peak_data.ecg_peakdetect(hr)
