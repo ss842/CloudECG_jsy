@@ -11,6 +11,7 @@ Travis CI Build Status
 ---
 
 [![Build Status](https://travis-ci.org/ss842/CloudECG_jsy.svg?branch=master)](https://travis-ci.org/ss842/CloudECG_jsy)
+
 License
 ---
 
@@ -26,7 +27,10 @@ Running the Code:
 ---
 
 Sending time and voltage json dictionaries to:
+
 1) vcm-1828.vm.duke.edu:5000/api/heart_rate/summary will return a summary of instant heart rates, tachy- and brachycardia annotations across all time points
+
 2) vcm-1828.vm.duke.edu:5000/api/heart_rate/average will return a summary of average heart rates, tachy- and brachycardia annotations across time intervals
+
 3) vcm-1828.vm.duke.edu:5000/api/requests will return total number of requests to our service to date
 
