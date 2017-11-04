@@ -82,6 +82,7 @@ def average():
     :rtype: json dictionary output of time_interval,
     average_heart_rate, tachycardia_annotations, brachycardia_annotations
     """
+    SEC_TO_MIN = 60
     hr = np.array([])
     brachy_output = []
     tachy_output = []
@@ -96,7 +97,7 @@ def average():
 
     t = np.array(j_dict['time'])
     v = np.array(j_dict['voltage'])
-    avg_period = np.array(j_dict['averaging_period'])
+    avg_period = np.array(j_dict['averaging_period'])/SEC_TO_MIN
 
     try:
         data_checker = Data(t, v)
@@ -109,7 +110,7 @@ def average():
     peak_data = Processing()
     peak_data.ecg_peakdetect(hr)
     peak_times = peak_data.t
-    hr_data = Vitals(peak_times, hr[:, 0])
+    hr_data = Vitals(peak_times, hr[:, 0], avg_period)
     avg_hr_array = hr_data.avg_hr_array
     try:
         avg_hr_diagnosis = Diagnosis(avg_hr_array)
